@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService,Task } from 'src/app/services/database/database.service';
 import { ApiService } from 'src/app/services/api/api.service';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tasks',
@@ -8,10 +9,12 @@ import { ApiService } from 'src/app/services/api/api.service';
   styleUrls: ['./tasks.page.scss'],
 })
 export class TasksPage implements OnInit {
-  
 
-  constructor(private db:DatabaseService , private api : ApiService) { }
-  // tasks : [] = [];
+  loader:HTMLIonLoadingElement;
+
+
+  constructor(private db:DatabaseService , private api : ApiService , public loadingController: LoadingController) { }
+  
   tasks : Task[] = [];
 
   ngOnInit() {
@@ -27,12 +30,27 @@ export class TasksPage implements OnInit {
       this.api.getTasks().subscribe(data=>{
           for( var keys in data)
           this.tasks.push({
-            ID:data[keys].uuid,
+            id:data[keys].id,
             description : data[keys].description,
             status : data[keys].status,
-            date : data[keys].entry
+            entry : data[keys].entry,
+            uuid:data[keys].uuid
           })
       });
       console.log(this.tasks)
+  }
+
+
+  async presentLoader(options: any = {}) {
+    this.loader = await this.loadingController.create(options);
+    await this.loader.present();
+  }
+
+  async dismissLoader() {
+      await this.loader.dismiss()
+      .then(()=>{
+        this.loader = null;
+      })
+      .catch(e => console.log(e));
   }
 }

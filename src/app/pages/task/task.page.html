@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tasks"></ion-back-button>
+      </ion-buttons>
+    <ion-title>task</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="isLoaded">
+  <ion-item>
+    <ion-input value="{{task.description}}"></ion-input>
+  </ion-item>
+  <ion-item >
+    <ion-label>Date Created</ion-label>
+    <ion-datetime  readonly value="{{task.entry}}"></ion-datetime>
+  </ion-item>
+  <ion-item >
+    <ion-label>Date Modified</ion-label>
+    <ion-datetime  readonly value="{{task.modified}}"></ion-datetime>
+  </ion-item>
+  
+</ion-content>

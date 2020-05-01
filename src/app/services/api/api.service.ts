@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Task } from '../database/database.service'
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +27,13 @@ export class ApiService {
 
 
    getTasks(){
-    return this.http.get(this.APIUrl+'tasks/',this.httpOptions);
+    return this.http.get<Task[]>(this.APIUrl+'tasks/',this.httpOptions);
   }
 
+
+  getTask(id){
+    return this.http.get<Task>(this.APIUrl+'tasks/'+id+'/',this.httpOptions);
+  }
   
   
 }

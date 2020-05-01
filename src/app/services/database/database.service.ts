@@ -6,10 +6,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 export interface Task { 
-  ID : number,
+  id : string,
+  uuid : string,
   description : string,
   status : string,
-  date : Date
+  entry : Date
 }
 
 @Injectable({
@@ -71,10 +72,11 @@ export class DatabaseService {
        if(data.rows.length>0){
          for(let i=0;i<data.rows.length ; i++){
            tasks.push({
-             ID:data.rows.item(i).ID,
+              id:data.rows.item(i).ID,
              description : data.rows.item(i).description,
              status : data.rows.item(i).status,
-             date : data.rows.item(i).date
+             entry : data.rows.item(i).date,
+             uuid:data.rows.item(i).uuid
            })
          }
        }
