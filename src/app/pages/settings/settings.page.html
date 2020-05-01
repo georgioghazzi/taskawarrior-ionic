@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-title>Settings</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tasks"></ion-back-button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked">API Key</ion-label>
+    <ion-input [(ngModel)]="APIKey" ></ion-input>
+  </ion-item>
+  <ion-button (click)='test()'>Save</ion-button>
+
+</ion-content>
