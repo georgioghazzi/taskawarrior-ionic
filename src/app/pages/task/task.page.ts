@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/services/api/api.service';
 import { DatabaseService,Task } from 'src/app/services/database/database.service';
 import { LoadingController } from '@ionic/angular';
+import { LoaderService } from 'src/app/services/loader/loader.service';
+
 
 @Component({
   selector: 'app-task',
@@ -11,10 +13,9 @@ import { LoadingController } from '@ionic/angular';
 })
 export class TaskPage implements OnInit {
 
-  loader:HTMLIonLoadingElement;
   isLoaded = false;
 
-  constructor(private route: ActivatedRoute,private api : ApiService , public loadingController: LoadingController) {
+  constructor(private route: ActivatedRoute,private api : ApiService , private loader: LoaderService ) {
     // let loading = this.loadingCtrl.create({
     //   content: 'Please wait...'
     // });
@@ -22,7 +23,7 @@ export class TaskPage implements OnInit {
   task : Task = null
 
   ngOnInit() {
-    this.presentLoader();
+    this.loader.presentLoader();
     this.route.paramMap.subscribe(params => {
       let taskID = params.get('id');
       
@@ -30,7 +31,7 @@ export class TaskPage implements OnInit {
       this.api.getTask(taskID).subscribe(data=>{
        this.task = data 
         this.isLoaded=true
-        this.dismissLoader();
+        this.loader.dismissLoader();
        console.log(this.task)
       })
 
@@ -39,18 +40,7 @@ export class TaskPage implements OnInit {
     
   }
 
-  async presentLoader(options: any = {}) {
-    this.loader = await this.loadingController.create(options);
-    await this.loader.present();
-  }
-
-  async dismissLoader() {
-      await this.loader.dismiss()
-      .then(()=>{
-        this.loader = null;
-      })
-      .catch(e => console.log(e));
-  }
+ 
 }
 
 

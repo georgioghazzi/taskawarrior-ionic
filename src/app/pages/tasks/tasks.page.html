@@ -9,8 +9,10 @@
 
 <ion-content>
 <ion-list>
-  <ion-item *ngFor="let t of tasks; let i = index" [routerLink]="['/', 'tasks', t.uuid]">
-    <ion-label>{{t.description}}</ion-label>
+  <ion-item *ngFor="let t of tasks; let i = index" >
+    <ion-label [routerLink]="['/', 'tasks', t.uuid]">{{t.description}}</ion-label>
+    <ion-icon name="checkmark-outline" (click)="MarkTaskAsDone(t.uuid)"></ion-icon>
+    <ion-icon name="close-outline" (click)="DeleteTask(t.uuid)"></ion-icon>
   </ion-item>
 
   </ion-list>

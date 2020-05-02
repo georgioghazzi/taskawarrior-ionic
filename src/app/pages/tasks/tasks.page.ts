@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService,Task } from 'src/app/services/database/database.service';
 import { ApiService } from 'src/app/services/api/api.service';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tasks',
@@ -10,10 +10,9 @@ import { LoadingController } from '@ionic/angular';
 })
 export class TasksPage implements OnInit {
 
-  loader:HTMLIonLoadingElement;
+  isLoading = false;
 
-
-  constructor(private db:DatabaseService , private api : ApiService , public loadingController: LoadingController) { }
+  constructor(private db:DatabaseService , private api : ApiService , public loadingController: LoadingController,private alertController : AlertController) { }
   
   tasks : Task[] = [];
 
@@ -41,16 +40,49 @@ export class TasksPage implements OnInit {
   }
 
 
-  async presentLoader(options: any = {}) {
-    this.loader = await this.loadingController.create(options);
-    await this.loader.present();
+  async MarkTaskAsDone(uuid) {
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: '<strong>Are you sure you want to mark this task as done?</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Okay',
+          handler: () => {
+            this.api.markTaskAsDone(uuid).subscribe(data=>console.log(data))
+            //Should Sync Here.
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
-  async dismissLoader() {
-      await this.loader.dismiss()
-      .then(()=>{
-        this.loader = null;
-      })
-      .catch(e => console.log(e));
+  async DeleteTask(uuid) {
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: '<strong>Are you sure you want to mark this task as done?</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Okay',
+          handler: () => {
+            this.api.deleteTask(uuid).subscribe(data=>console.log(data))
+            //Should Sync Here.
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
+
+
 }

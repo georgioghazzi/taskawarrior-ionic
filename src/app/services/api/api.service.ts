@@ -7,8 +7,7 @@ import { Task } from '../database/database.service'
 })
 export class ApiService {
   //TO BE DELETED LATER
-  proxyURL='https://cors-anywhere.herokuapp.com/'
-  APIUrl = `${this.proxyURL}https://inthe.am/api/v2/`
+  APIUrl = `https://inthe.am/api/v2/`
   APIKey = '2d538ef085644d5717e06b58ffe6610dc3c67589'
   httpOptions = {
     headers: new HttpHeaders({
@@ -35,5 +34,12 @@ export class ApiService {
     return this.http.get<Task>(this.APIUrl+'tasks/'+id+'/',this.httpOptions);
   }
   
+  markTaskAsDone(id){
+    return this.http.delete(this.APIUrl+'tasks/'+id+'/',this.httpOptions);
+  }
   
+
+  deleteTask(id){
+    return this.http.post(this.APIUrl+'tasks/'+id+'/delete/',[] ,this.httpOptions);
+  }
 }
