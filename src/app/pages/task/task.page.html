@@ -9,10 +9,14 @@
 
 <ion-content *ngIf="isLoaded">
   <ion-item>
-    <ion-input value="{{task.description}}"></ion-input>
+    <ion-label position="fixed">Description</ion-label>
+    <ion-input [(ngModel)]="description"></ion-input>
   </ion-item>
   <ion-item >
     <ion-label>Date Created</ion-label>
-    <ion-datetime  readonly value="{{task.entry}}"></ion-datetime>
+    <ion-datetime [readonly]='!isNew' [(ngModel)]="date"></ion-datetime>
   </ion-item>
+
+    <ion-button *ngIf="!isNew" (click)="EditTask(task.uuid)">Save</ion-button>
+    <ion-button *ngIf="isNew" (click)="CreateNewTask()">Create</ion-button>
 </ion-content>

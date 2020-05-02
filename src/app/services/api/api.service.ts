@@ -42,4 +42,13 @@ export class ApiService {
   deleteTask(id){
     return this.http.post(this.APIUrl+'tasks/'+id+'/delete/',[] ,this.httpOptions);
   }
+
+  createTask(data){
+    return this.http.post(this.APIUrl+'tasks/',data,this.httpOptions);
+  }
+
+
+  editTask(id,data){
+    return this.http.put(this.APIUrl+'tasks/'+id+'/',data,this.httpOptions);
+  }
 }

@@ -7,7 +7,6 @@ import { LoadingController } from '@ionic/angular';
 export class LoaderService {
 
   loader:HTMLIonLoadingElement;
-  
   constructor(public loadingController: LoadingController) { }
 
 

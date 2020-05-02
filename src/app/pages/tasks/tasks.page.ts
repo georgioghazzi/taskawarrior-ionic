@@ -11,6 +11,7 @@ import { LoadingController, AlertController } from '@ionic/angular';
 export class TasksPage implements OnInit {
 
   isLoading = false;
+  date = new Date().toISOString();
 
   constructor(private db:DatabaseService , private api : ApiService , public loadingController: LoadingController,private alertController : AlertController) { }
   
